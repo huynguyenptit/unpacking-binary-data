@@ -1,12 +1,10 @@
-[Source](https://www.codediesel.com/php/unpacking-binary-data/ "Permalink to Unpacking binary data in PHP")
-
 # Giải nén dữ liệu dạng nhị phân trong PHP 
 
-LÀm việc với các file nhị phân trong PHP là yêu cầu hiếm gặp. Tuy nhiên một hàm PHP để 'pack' hoặc 'unpack' khi cần thiết lại có thể giúp bạn rất nhiều. Để cài đặt, chúng ta sẽ bắt đầu giai đoạn làm việc với vấn đề của chương trình, điều này sẽ giúp cho cuộc thảo luận luôn tập trung vào một vấn đề có liên quan. Vấn đề ở đây là: chúng ta muốn viết một hàm lấy một file image như một biến và cho chúng ta biết nó có phải ảnh GIF hay không; không liên quan tới bất kỳ phần mở rộng nào của file. Chúng ta không sử dụng bất kỳ tính năng nào của thư viện GD.
+LÀm việc với các file nhị phân trong PHP là yêu cầu hiếm gặp. Tuy nhiên khi cần thiết các function 'pack' và 'unpack' của PHP có thể hỗ trợ bạn rất nhiều. Để cài đặt, chúng ta sẽ bắt đầu giai đoạn làm việc với vấn đề của chương trình, điều này sẽ giúp cho cuộc thảo luận luôn tập trung vào một vấn đề có liên quan. Vấn đề ở đây là: chúng ta muốn viết một hàm lấy một file image như một biến và cho chúng ta biết nó có phải ảnh GIF hay không; không liên quan tới bất kỳ phần mở rộng nào của file. Chúng ta không sử dụng bất kỳ tính năng nào của thư viện GD.
 
-#### A GIF file header Một tiêu đề của file GIF
+#### Một tiêu đề của file GIF
 
-Với yêu cầu là chúng ta không được sử dụng bất kỳ tính năng đồ hoạ này, để giải quyết vấn đề này chúng ta cần lấy được dữ liệu liên quan từ chính file GIF đó. Không giống như HTML hay XML hay bất kì một định dạng file text nào khác, một file GIF và hầu hết các định dạng file image khác đều được lưu trữ dạng file nhị phân(binary format). Hầu hết các file nhị phân đều có phần header ở đầu file cung cấp các thông tin meta về file cụ thể đó. Chúng ta có thể sử dụng thông tin này để tìm ra kiểu của file hoặc bất cứ thứ gì như là chiều cao, độ rộng của file GIF. Một header của GIF thường có dạng như dưới đây, sử dụng một hex editor như là [WinHex][1]. 
+Với yêu cầu là chúng ta không được sử dụng bất kỳ function nào trong thư viện đồ họa, để giải quyết vấn đề này chúng ta cần lấy được dữ liệu liên quan từ chính file GIF đó. Không giống như HTML hay XML hay bất kì một định dạng file text nào khác, một file GIF và hầu hết các định dạng file image khác đều được lưu trữ dạng file nhị phân(binary format). Hầu hết các file nhị phân đều có phần header ở đầu file cung cấp các thông tin meta về file cụ thể đó. Chúng ta có thể sử dụng thông tin này để tìm ra kiểu của file hoặc bất cứ thứ gì như là chiều cao, độ rộng của file GIF. Một header của GIF thường có dạng như dưới đây, sử dụng một hex editor như là [WinHex][1]. 
 
 ![][2]
 
@@ -37,7 +35,7 @@ Vì vậy để kiểm tra nếu file ảnh là một file GIF hợp lệ, chún
 
 #### sử dụng hàm unpack()
 
-[unpack()][3] là sự bổ sung cho [pack()][4] – nó chuyển đổi dữ liệu nhị phân sang một mảng kết hợp dựa trên định dạng có sẵn. Nó là một phần trong các dòng của _sprintf_, chuyển đổi chuỗi data theo một số định dạng nhất định. Đây là 2 function cho phép ta đọc và ghi vào bộ đệm dữ liệu nhị phân theo thành một chuỗi được định dạng trước. Nó dễ dàng cho một lập trình viên trao đổi dữ liệu với chương trình được viết bằng ngôn ngữ khác hoặc định dạng khác. Lấy một vài ví dọ nhỏ.
+[unpack()][3] là sự bổ sung cho [pack()][4] – nó chuyển đổi dữ liệu nhị phân sang một mảng kết hợp dựa trên định dạng có sẵn. Nó là một phần trong các dòng của _sprintf_, chuyển đổi chuỗi data theo một số định dạng nhất định. Đây là 2 function cho phép ta đọc và ghi vào bộ đệm dữ liệu nhị phân theo thành một chuỗi được định dạng trước. Nó dễ dàng cho một lập trình viên trao đổi dữ liệu với chương trình được viết bằng ngôn ngữ khác hoặc định dạng khác. Lấy một vài ví dụ nhỏ.
 
 | ----- |
 | 
@@ -68,7 +66,7 @@ Nó sẽ in ra như sau, mã thập phân cho 'codediesel' :
 
  | 
 
- Trong cả 2 ví dụ trên thì đối số đầu tiên là định dạng string, đối số thứ 2 lại là dữ liệu thực tế. Với mỗi chuỗi định dạng nhất định ứng với cách thể hiện dữ liệu của đối số đó. trong ví dụ này, phần đầu tiên có định dạng là 'C', chỉ định rằng chúng ta xử lý dữ liệu có kí tự đầu tiên như là một byte unsigned. Phần '*' tiếp theo, yêu cầu hàm áp dụng code đã được định dạng trước đó cho tất cả các ký tự còn lại.
+ Trong cả 2 ví dụ trên thì đối số đầu tiên là định dạng string, đối số thứ 2 lại là dữ liệu thực tế. Với mỗi chuỗi định dạng nhất định ứng với cách thể hiện dữ liệu của đối số đó. trong ví dụ này, phần đầu tiên có định dạng là 'C', chỉ định rằng chúng ta xử lý dữ liệu có kí tự đầu tiên như là một byte unsigned. Phần '*' tiếp theo, cho các function áp dụng các định dạng đã được chỉ định từ trước với tất cả các kí tự còn lại
 
 Điều này có thể gây nhầm lẫn, phần tiếp theo có thể cung cấp một ví dụ cụ thể hơn.
 
@@ -106,7 +104,7 @@ Dưới đây là giải pháp sử dụng hàm unpack() cho các vấn đề v�
 
  | 
 
-Dòng quan trọng nhất cần lưu ý là định dạng quy định. Các kí tự như 'A6' chỉ định hàm unpack() lấy 6bytes đầu tiên của dữ liệu và thể hiện nó như một chuỗi. Dữ liệu đã truy xuất được lưu trữ vào một mảng liên kết với khoá có tên là 'version'.
+Dòng quan trọng nhất cần lưu ý là chỉ định định dạng. Các kí tự như 'A6' chỉ định hàm unpack() lấy 6bytes đầu tiên của dữ liệu và thể hiện nó như một chuỗi. Dữ liệu đã truy xuất được lưu trữ vào một mảng liên kết với khoá có tên là 'version'.
 
 Một ví dụ khác được đưa ra dưới đây. Nó trả về một vài dữ liệu bỏ sung trong header của file GIF, bao gồm cả độ rộng và chiều cao của ảnh.
 
@@ -168,7 +166,7 @@ Ví dụ trên sau khi chạy sẽ in ra như sau:
 
  | 
 
-Dưới đâu chúng ta sẽ đi vào chi tiết việc các định dạng thông số làm việc như thế nào. Tôi sẽ chi nhỏ các định dạng, đưa ra các chi tiết cho mỗi định dạng.
+Dưới đây chúng ta sẽ đi vào chi tiết việc các định dạng thông số làm việc như thế nào. Tôi sẽ chi nhỏ các định dạng, đưa ra các chi tiết cho mỗi định dạng.
 
 | ----- |
 | 
@@ -217,9 +215,3 @@ Dưới đâu chúng ta sẽ đi vào chi tiết việc các định dạng thô
 
 Có thể tìm thấy các định dạng tuỳ chọn khác [ở đây][4]. Mặc dù tôi chỉ đưa ra một vài ví dụ nhỏ, hàm pack/unpack có khả năng làm được nhiều hơn những thứ được trình bày ở đây.
 
-Note: Từ phiên bản PHP 7.2.0 kiểu float và double được hỗ trợ bởi cả Big Endian và Little Endian.
-
-[1]: http://www.x-ways.net/winhex/index-m.html
-[2]: http://www.codediesel.com/wp-content/uploads/2010/09/winhex.gif "winhex"
-[3]: http://php.net/manual/en/function.unpack.php
-[4]: http://www.php.net/manual/en/function.pack.php
